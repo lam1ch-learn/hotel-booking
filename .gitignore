@@ -1,0 +1,12 @@
+**/target/
+.work/
+.env
+*.log
+.idea/
+*.iml
+
+.vscode/
+__pycache__/
+.DS_Store
+.env.*
+!.env.example

@@ -1,0 +1,63 @@
+server:
+  port: ${BOOKING_PORT:8082}
+  address: ${BIND_ADDRESS:127.0.0.1}
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:h2:mem:booking;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=5000
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+security:
+  jwt:
+    public-key: ${JWT_PUBLIC_KEY:file:.work/keys/public.pem}
+    private-key: ${JWT_PRIVATE_KEY:file:.work/keys/private.pem}
+    ttl: ${JWT_TTL:1h}
+    issuer: ${JWT_ISSUER:hotel-booking}
+    audience: ${JWT_AUDIENCE:hotel-api}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: ${SERVICE_IP:127.0.0.1}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+logging:
+  structured:
+    format:
+      console: logstash
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+hotel-client:
+  service-id: ${HOTEL_SERVICE_ID:hotel-service}
+  connect-timeout: ${HOTEL_CONNECT_TIMEOUT:500ms}
+  read-timeout: ${HOTEL_READ_TIMEOUT:1s}
+  max-attempts: ${HOTEL_MAX_ATTEMPTS:3}
+  retry-delay: ${HOTEL_RETRY_DELAY:100ms}
+  backoff-multiplier: ${HOTEL_BACKOFF_MULTIPLIER:2}
+  circuit-window: ${HOTEL_CIRCUIT_WINDOW:10}
+  circuit-minimum-calls: ${HOTEL_CIRCUIT_MINIMUM_CALLS:5}
+  circuit-failure-rate: ${HOTEL_CIRCUIT_FAILURE_RATE:50}
+  circuit-wait: ${HOTEL_CIRCUIT_WAIT:10s}
+booking:
+  pending-timeout: ${BOOKING_PENDING_TIMEOUT:30s}
+  recovery-delay: ${BOOKING_RECOVERY_DELAY:5000}
+  recovery-batch-size: ${BOOKING_RECOVERY_BATCH_SIZE:50}

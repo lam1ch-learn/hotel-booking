@@ -1,0 +1,49 @@
+server:
+  port: ${HOTEL_PORT:8081}
+  address: ${BIND_ADDRESS:127.0.0.1}
+spring:
+  application:
+    name: hotel-service
+  datasource:
+    url: jdbc:h2:mem:hotel;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=5000
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: ${SEED_MODE:always}
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+security:
+  jwt:
+    public-key: ${JWT_PUBLIC_KEY:file:.work/keys/public.pem}
+    issuer: ${JWT_ISSUER:hotel-booking}
+    audience: ${JWT_AUDIENCE:hotel-api}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: ${SERVICE_IP:127.0.0.1}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+logging:
+  structured:
+    format:
+      console: logstash
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

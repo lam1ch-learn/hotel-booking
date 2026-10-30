@@ -1,0 +1,5 @@
+demo:
+  admin-username: ${DEMO_ADMIN_USERNAME:admin}
+  admin-password: ${DEMO_ADMIN_PASSWORD}
+  user-username: ${DEMO_USER_USERNAME:maxim}
+  user-password: ${DEMO_USER_PASSWORD}
